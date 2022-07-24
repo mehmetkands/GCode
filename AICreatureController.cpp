@@ -23,9 +23,10 @@
 
 AKillerEaterAIController::AKillerEaterAIController(FObjectInitializer const& object_initializer)
 {
-
+  	//Davranış Ağacının Dizini
 	static ConstructorHelpers::FObjectFinder<UBehaviorTree> obj(TEXT("BehaviorTree'/Game/Weapons/AI/KillerAIBTree.KillerAIBTree'"));
-
+	
+	//Davranış Ağacının Dizini Başarılıysa
 	if (obj.Succeeded())
 	{
 		BTree = obj.Object;
@@ -42,11 +43,11 @@ AKillerEaterAIController::AKillerEaterAIController(FObjectInitializer const& obj
 	HearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config"));
 
 
-	//()->SetDominantSense(*SightConfig->GetSenseImplementation());
+	//Algı Güncellemesi
 	GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AKillerEaterAIController::PawnDetected);
 	GetPerceptionComponent()->ConfigureSense(*SightConfig);
 	GetPerceptionComponent()->ConfigureSense(*HearingConfig);
-
+	//Görme ve Algılar
 	SightConfig->SightRadius = AISightRadius;
 	SightConfig->LoseSightRadius = AILoseSightRadius;
 	SightConfig->PeripheralVisionAngleDegrees = 180.0f;
@@ -56,14 +57,11 @@ AKillerEaterAIController::AKillerEaterAIController(FObjectInitializer const& obj
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 
+	//İşitme Değerleri
 	HearingConfig->HearingRange = 3000.0f;
 	HearingConfig->DetectionByAffiliation.bDetectEnemies = true;
 	HearingConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	HearingConfig->DetectionByAffiliation.bDetectNeutrals = true;
-
-	
-
-
 }
 
 void AKillerEaterAIController::BeginPlay()
@@ -71,8 +69,6 @@ void AKillerEaterAIController::BeginPlay()
 	Super::BeginPlay();
 	RunBehaviorTree(BTree);
 	BTComponent->StartTree(*BTree);
-
-	
 }
 
 void AKillerEaterAIController::OnPossess(APawn* const pawn)
@@ -100,40 +96,40 @@ void AKillerEaterAIController::Tick(float DeltaSeconds)
 
 void AKillerEaterAIController::PawnDetected(AActor* actor, FAIStimulus const stimulus)
 {
-	
+	//Algılanan sınıf oyuncu karakteriyse
 	if (auto const ch = Cast<AGeleceginGunluguCharacter>(actor))
 	{
 	
 		GetBlackboard()->SetValueAsBool(bbkeys::DemonCanSeePlayer, stimulus.WasSuccessfullySensed());
 
 
-	if (bbkeys::semisee, stimulus.WasSuccessfullySensed())
-	{
-		perception = 2.0f;
-		GetWorldTimerManager().SetTimer(SureSight, this, &AKillerEaterAIController::TMR, 2.0f, true);
-
-		if (ch->HealthOverride > 0)
+		if (bbkeys::semisee, stimulus.WasSuccessfullySensed())
 		{
-			DetectedPawns.Add(ch);
+			perception = 2.0f;
+			GetWorldTimerManager().SetTimer(SureSight, this, &AKillerEaterAIController::TMR, 2.0f, true);
+
+			if (ch->HealthOverride > 0)
+			{
+				//0'dan büyük ise dedectedpawn array'e eklenir. Böylece algılanan tüm düşmanlar arrayde yer bulur. 
+				//Array listesi Task sırasında kullanılır.
+				DetectedPawns.Add(ch);
+
+			}
 
 		}
 
-	}
-
-	else
-	{
-		perception = 1.0f;
-
-		if (perception == 1.0f)
+		else
 		{
-			GetBlackboard()->SetValueAsBool(bbkeys::canseeplayer, false);
-			DetectedPawns.Remove(ch);
-
-
+			perception = 1.0f;
+			if (perception == 1.0f)
+			{
+				GetBlackboard()->SetValueAsBool(bbkeys::canseeplayer, false);
+				DetectedPawns.Remove(ch);
+			}
 		}
 	}
-	}
 
+	//Eğer saldırılacak nesne bir obje ise(Multiplayer için)
 	if (auto const Object = Cast<AGPSMultiplayerTaskObject>(actor))
 	{
 
@@ -148,7 +144,6 @@ void AKillerEaterAIController::PawnDetected(AActor* actor, FAIStimulus const sti
 			if (Object->ObjectHealth > 0)
 			{
 				DetectedPawns.Add(Object);
-
 			}
 
 		}
@@ -161,8 +156,6 @@ void AKillerEaterAIController::PawnDetected(AActor* actor, FAIStimulus const sti
 			{
 				GetBlackboard()->SetValueAsBool(bbkeys::canseeplayer, false);
 				DetectedPawns.Remove(Object);
-
-
 			}
 		}
 	}
@@ -174,21 +167,19 @@ void AKillerEaterAIController::TMR()
 {
 	if (perception == 2.0f)
 	{
-
 		GetBlackboard()->SetValueAsBool(bbkeys::canseeplayer, true);
-
-
 	}
 
 
 }
 
+//Self Aktör Bulucu
 void AKillerEaterAIController::ActorSelfFounder(AActor* Actor)
 {
 	SelfActor = Actor;
 }
 
-
+//Zekayı sıfırlar. Ölüm fonksiyonunda çağrılır.
 void AKillerEaterAIController::SysStopLogic()
 {
 	GetBrainComponent()->StopLogic("Dead");
