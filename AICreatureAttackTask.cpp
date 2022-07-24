@@ -21,37 +21,25 @@ EBTNodeResult::Type UKillerEaterAttack::ExecuteTask(UBehaviorTreeComponent& owne
 
 			if (AKE != NULL)
 			{
-
-
 				if (CharacterTarget)
 				{
-
+					//Dedectedpawn array çağrılır. Dizi içerisinden en yakın düşman birincil hedeftir.
 					for (AActor* Act : CharacterTarget->DetectedPawns)
 					{
 						if (Act)
 						{
-
 							if (AGeleceginGunluguCharacter* CastGG = Cast<AGeleceginGunluguCharacter>(Act))
 							{
-
 								float Vector = FVector::Distance(CastGG->GetActorLocation(), AKE->GetActorLocation());
-
 								Distance.Add(Vector);
-								
-
-								Distance;
 								float Minumum = Distance[0];
-
-
 								for (int i = 0; i < Distance.Num(); i++)
 								{
-
 									if (Distance[i] < Minumum)
 									{
 										Minumum = Distance[i];
 									}
 								}
-
 
 								if (FVector::Distance(CastGG->GetActorLocation(), AKE->GetActorLocation()) == Minumum)
 								{
@@ -65,23 +53,16 @@ EBTNodeResult::Type UKillerEaterAttack::ExecuteTask(UBehaviorTreeComponent& owne
 								float Vector = FVector::Distance(CastOb->GetActorLocation(), AKE->GetActorLocation());
 
 								Distance.Add(Vector);
-
-
-								Distance;
 								float Minumum = Distance[0];
-
-
-
+								
 								for (int i = 0; i < Distance.Num(); i++)
 								{
-
 									if (Distance[i] < Minumum)
 									{
 										Minumum = Distance[i];
 									}
 								}
-
-
+	
 								if (FVector::Distance(CastOb->GetActorLocation(), AKE->GetActorLocation()) == Minumum)
 								{
 									playerlastseenloc = CastOb->GetActorLocation();
@@ -91,17 +72,15 @@ EBTNodeResult::Type UKillerEaterAttack::ExecuteTask(UBehaviorTreeComponent& owne
 					}
 				}
 			}
-
+			
 			FVector(playerlastseenloc.X, playerlastseenloc.Y, 0);
 }
-
 	owner_comp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), playerlastseenloc);
 
-	// move to the player's location
+	// Lokasyona temel hareket.
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(cont, playerlastseenloc);
 
 	FinishLatentTask(owner_comp, EBTNodeResult::Succeeded);
 	
 	return EBTNodeResult::Succeeded;
-
 }
