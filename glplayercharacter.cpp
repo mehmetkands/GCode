@@ -1,16 +1,52 @@
+#include "GeleceginGunluguCharacter.h"
+#include "SinglePlayerCampaing1.h"
+#include "Animation/AnimationAsset.h"
+#include "GeleceginGunluguHUD.h"
+#include "GeleceginGunluguProjectile.h"
+#include "GGCPlayerController.h"
+#include "GGGameStateBase.h"
+#include "Animation/AnimInstance.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Camera/CameraComponent.h"
+#include "Containers/Array.h"
+#include "Components/SpotLightComponent.h"
+#include "GameFramework/Pawn.h"
+#include "InterActiveTextWidget.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/InputComponent.h"
+#include "WeaponSmgUmp.h"
+#include "Engine/Engine.h"
+#include "Net/UnrealNetwork.h"
+#include "GameFramework/InputSettings.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Objects.h"
+#include "GGPlayerState.h"
+#include "GGCAIController.h"
+#include "WeaponSmgUmp.h"
+#include "WeaponUmp.h"
+#include "DarkGun.h"
+#include "WeaponShotgun.h"
+#include "Components/PanelWidget.h"
+#include "WeaponSniper.h"
+#include "Blueprint/UserWidget.h"
+#include "GenericTeamAgentInterface.h"
+#include "MotionControllerComponent.h"
+#include "Curves/CurveLinearColor.h"
+#include "ScoreAnalysis.h"
+#include "SpawnLocationBox.h"
+#include "GameFramework/GameMode.h"
+#include "GameFramework/GameModeBase.h" 
+#include "GameFramework/PlayerController.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 
-
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
-    //******************************************************************Oyuncu İçin Temel Sistemler*******************************************************************************************************************************
+***********************************************//etc*******************************************************************
 
 // Silah Değiştirme*** Aktif slot numarasına göre silahı yok eder, ikincil silah numarasına göre yeni silahı spawn eder.//
 void AGeleceginGunluguCharacter::ChangeSystem()
@@ -403,9 +439,4 @@ void AGeleceginGunluguCharacter::SpawnDroppedWeapons()
 			  }
 		}
 }
-    
-    
-
-
-    
-    
+   
