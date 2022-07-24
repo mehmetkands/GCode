@@ -1,3 +1,33 @@
+
+    //Bu sistemin işlerliği AI kontrolcüsüyle beraberdir. Kontrolcü Düşmanları tespit eder ve Array olarak kaydeder.
+    //Sistem kendisine en yakın düşmanı birincil tehdit ve hedef olarak seçer. 
+    //Birden fazla düşmanın olduğu sahalarda yararlı bir yaklaşım sunar. 
+    //Bellek üzerindeki yükü?
+    //Default düşman KillerEater için tasarlanmıştır. 
+    //Senaryo gereği KillerEaterV2'de çalıştırılmamalıdır!
+
+
+
+#include "KillerEaterAttack.h"
+#include "KillerEaterAIController.h"
+#include "Runtime/NavigationSystem/Public/NavigationSystem.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h"
+#include "GeleceginGunluguCharacter.h"
+#include "BlackforceCharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "GPSMultiplayerTaskObject.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AIPerceptionTypes.h"
+#include "Runtime/Engine/Classes/Engine/Engine.h"
+#include "Perception/AISenseConfig_Sight.h"
+#include "blackboard_keys.h"
+#include "GameFramework/Actor.h"
+#include "KillerEater.h"
+
 UKillerEaterAttack::UKillerEaterAttack(FObjectInitializer const& object_initializer)
 {
 	NodeName = TEXT("Find Player Last Location and Attack!");
