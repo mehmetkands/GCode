@@ -35,7 +35,7 @@ UKillerEaterAttack::UKillerEaterAttack(FObjectInitializer const& object_initiali
 
 EBTNodeResult::Type UKillerEaterAttack::ExecuteTask(UBehaviorTreeComponent& owner_comp, uint8* node_memory)
 {
-	// get TargetLocation from blackboard via AI controller
+
 	TArray<float>Distance;
 	auto const cont = owner_comp.GetAIOwner();
 	AKillerEater* AKE = Cast<AKillerEater>(cont->GetPawn());
@@ -53,7 +53,7 @@ EBTNodeResult::Type UKillerEaterAttack::ExecuteTask(UBehaviorTreeComponent& owne
 			{
 				if (CharacterTarget)
 				{
-					//Dedectedpawn array çağrılır. Dizi içerisinden en yakın düşman birincil hedeftir.
+					//Dedectedpawn array çağrılır. Dizi içerisinden en yakın düşman birincil hedeftir. Foreach döngüsüyle çalışır.
 					for (AActor* Act : CharacterTarget->DetectedPawns)
 					{
 						if (Act)
