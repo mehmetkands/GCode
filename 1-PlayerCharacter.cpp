@@ -1,3 +1,5 @@
+//Sadece 4 adet fonksiyon paylaşılmıştır.
+
 #include "GeleceginGunluguCharacter.h"
 #include "SinglePlayerCampaing1.h"
 #include "Animation/AnimationAsset.h"
