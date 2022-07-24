@@ -1,29 +1,3 @@
-
-#include "GGCAIController.h"
-#include "Perception/AIPerceptionComponent.h"
-#include "Perception/AISenseConfig_Sight.h"
-#include "EnvironmentQuery/EnvQueryTypes.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
-#include "BehaviorTree/BehaviorTree.h"
-#include "Math/Vector.h" 
-#include "BehaviorTree/BlackboardComponent.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Perception/AISenseConfig_Hearing.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
-#include "Kismet/KismetMathLibrary.h"
-#include "Perception/AIPerceptionTypes.h"
-#include "GameFramework/Character.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "Engine/GameEngine.h"
-#include "IronEaterCharacter.h"
-#include "blackboard_keys.h"
-#include "BlackforceCharacter.h"
-#include "ai_tags.h"
-#include "EnvironmentQuery/EnvQueryManager.h"
-#include "TimerManager.h" 
-#include "GeleceginGunluguCharacter.h"
-#include "KillerEater.h"
-
 AGGCAIController::AGGCAIController(FObjectInitializer const& object_initializer)
 {
 	SetGenericTeamId(FGenericTeamId(TeamNumber));
