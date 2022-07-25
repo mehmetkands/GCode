@@ -1,4 +1,4 @@
-#include "GeleceginGunluguProjectile.h"
+#include "GProjectile.h"
 #include "IronEaterCharacter.h"
 #include "KillerEater.h"
 #include "Ghost.h"
@@ -7,7 +7,6 @@
 #include "CreatureSoftCharacter.h"
 #include "SpiderCharacter.h"
 #include "GPSTargetObjectActor.h"
-#include "Components/InputComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "GPSFlameExFire.h"
@@ -15,19 +14,15 @@
 #include "Animation/AnimationAsset.h"
 #include "GGPlayerState.h"
 #include "Animation/AnimInstance.h"
-#include "Camera/CameraComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Components/InputComponent.h"
-#include "GameFramework/InputSettings.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/PlayerController.h"
 
     // Default Ayarlar
-    AGeleceginGunluguProjectile::AGeleceginGunluguProjectile()
+    AGProjectile::AGProjectile()
     {
 		bReplicates = true;
     
@@ -38,7 +33,7 @@
 
 			if (GetLocalRole() == ROLE_Authority)
 			{
-				CollisionComp->OnComponentHit.AddDynamic(this, &AGeleceginGunluguProjectile::OnHit);	// set up a notification for when this component hits something blocking
+				CollisionComp->OnComponentHit.AddDynamic(this, &AGProjectile::OnHit);	// Isabet sonrası çağırılacak fonksiyon
 			}
      
       
@@ -84,7 +79,7 @@
 	}
 
 
-	//void AGeleceginGunluguProjectile::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+	//void AGProjectile::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 	//{
 	//	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	//
@@ -96,7 +91,7 @@
 
 
 //Merminin isabet ettiği karakteri tespit eder. İsabete sahip oyuncuya puan verir. Isabete göre zarar çağrılır.
-void AGeleceginGunluguProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+void AGProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
 	
 	if (IsBullet == true)
@@ -349,7 +344,7 @@ void AGeleceginGunluguProjectile::OnHit(UPrimitiveComponent * HitComp, AActor * 
 	}
 }
 
-void AGeleceginGunluguProjectile::FoundOwnerActor(AActor* Actor)
+void AGProjectile::FoundOwnerActor(AActor* Actor)
 {
 	if (IsBullet == true)
 	{
